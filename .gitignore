@@ -1,0 +1,4 @@
+app/config
+app/vendor
+.idea
+public/node_modules

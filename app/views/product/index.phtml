@@ -1,0 +1,96 @@
+<h1>Products</h1>
+
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Product Name</th>
+            <th scope="col">Model</th>
+            <th scope="col">Status</th>
+            <th scope="col">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php
+        if (!empty($this->products)) {
+            foreach ($this->products as $row => $product) {
+        ?>
+                <tr>
+                    <td><?= $product['product_id'] ?></td>
+                    <td><?php 
+                    if (!empty($this->productDescriptions[$product['product_id']])) {
+                       echo $this->productDescriptions[$product['product_id']]['name'] ?? '' ;
+                    }
+                    ?></td>
+                    <td><?= $product['model'] ?></td>
+                    <td><?= $product['status'] ?></td>
+                    <td><a href="<?= $this->_router->get([
+                        'controller' => $this->_controllerName,
+                        'action' => 'details',
+                        'getParams' => ['id' => $product['product_id']]
+                    ]) ?>">Details</a></td>
+                </tr>
+            <?php
+            }
+        } else { ?>
+            <tr>
+                <td colspan="2"><i>No products</i></td>
+            </tr>
+        <?php  }
+        ?>
+    </tbody>
+</table>
+<div class="row">
+    <div class="col-sm-6"></div>
+
+
+    <div class="col-sm-2">
+        <?php
+        if ($this->page > 1) { ?>
+
+            <a href="<?= $this->_router->get(
+                            [
+                                'controller' => $this->_controllerName,
+                                'action' => $this->_actionName,
+                                'getParams' => ['page' => 1]
+                            ]
+                        ) ?>" class="btn btn-info btn-block">
+                << </a>
+
+
+                <?php
+            }
+                ?>
+    </div>
+    <div class="col-sm-2">
+        <?php
+        if ($this->page > 1) { ?>
+            <a href="<?= $this->_router->get(
+                            [
+                                'controller' => $this->_controllerName,
+                                'action' => $this->_actionName,
+                                'getParams' => ['page' => $this->page - 1]
+                            ]
+                        ) ?>" class="btn btn-info btn-block">
+                < </a>
+                <?php
+            }
+                ?>
+    </div>
+    <?php
+    if ($this->limit == count($this->products)) { ?>
+        <div class="col-sm-2">
+            <a href="<?= $this->_router->get(
+                            [
+                                'controller' => $this->_controllerName,
+                                'action' => $this->_actionName,
+                                'getParams' => ['page' => $this->page + 1]
+                            ]
+                        ) ?>" class="btn btn-info btn-block"> > </a>
+        </div>
+    <?php
+    }
+    ?>
+</div>
