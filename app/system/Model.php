@@ -79,14 +79,14 @@ class Model
 
         // Insert
         if ($id === NULL) {
-            $sql = "INSERT INTO $this->_table_name (" . implode(", ", $keys) . ") ";
+            $sql = "INSERT INTO $this->_tableName (" . implode(", ", $keys) . ") ";
             $sql .= "VALUES ( :" . implode(", :", $keys) . ")";
             $stmt = $this->_db->prepare($sql);
             $stmt->execute($data);
             $id = $this->_db->lastInsertId();
         } else { // Update
             $data[":$this->_primary_key"] = $id;
-            $sql = "UPDATE $this->_table_name SET";
+            $sql = "UPDATE $this->_tableName SET";
             foreach ($keys as $key => $value) {
                 $sql .= " $value = :$value";
                 if ($key != (count($keys) - 1))
@@ -98,13 +98,5 @@ class Model
         }
 
         return $id;
-    }
-
-    protected function setRelation($modelKey,  $targetModel, $targetModelKey, $alias, $type = 'oneToOne')
-    {
-        $this->{"get" . $alias} = function () {
-            var_dump('test');
-            exit;
-        };
     }
 }

@@ -1,6 +1,6 @@
-# WMS
+# VMS
 
-Warehouse Management System
+Vice Manager Service
 
 ---
 

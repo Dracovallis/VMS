@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-md navbar-dark fixed-top" id="banner">
     <div class="container">
         <!-- Brand -->
-        <a class="navbar-brand" href="<?= $this->_router->get(['controller' => 'home']) ?>"><span>Warehouse</span> Management System</a>
+        <a class="navbar-brand" href="<?= $this->_router->get(['controller' => 'home']) ?>"><span>Vice</span> Manager Service</a>
 
         <!-- Toggler/collapsibe Button -->
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
@@ -11,28 +11,28 @@
         <!-- Navbar links -->
         <div class="collapse navbar-collapse" id="collapsibleNavbar">
             <ul class="navbar-nav ml-auto">
-
-                <li class="nav-item">
-                    <a class="nav-link" href="<?= $this->_router->get(['controller' => 'home']) ?>">
-                        Home
-                    </a>
-                </li>
-
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
-                        Products
-                    </a>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" href="<?= $this->_router->get(['controller' => 'product']) ?>">
-                            List
-                        </a>
-                    </div>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="<?= $this->_router->get(['controller' => 'warehouse']) ?>">
-                        Warehouse Calculator
-                    </a>
-                </li>
+                <?php foreach ($this->_userMenu[(empty($this->user) ? 'guest' : 'logged')] as $menuItem) : ?>
+                    <?php if (!empty($menuItem['children'])) : ?>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                                <?= $menuItem['title'] ?>
+                            </a>
+                            <div class="dropdown-menu">
+                                <?php foreach ($menuItem['children'] as $childItem) : ?>
+                                    <a class="dropdown-item" href="<?= $this->_router->get($childItem['url']) ?>">
+                                        <?= $childItem['title'] ?>
+                                    </a>
+                                <?php endforeach; ?>
+                            </div>
+                        </li>
+                    <?php else : ?>
+                        <li class="nav-item">
+                            <a class="nav-link" href="<?= $this->_router->get($menuItem['url']) ?>">
+                                <?= $menuItem['title'] ?>
+                            </a>
+                        </li>
+                    <?php endif; ?>
+                <?php endforeach ?>
             </ul>
         </div>
     </div>

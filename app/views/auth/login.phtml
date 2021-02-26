@@ -1,0 +1,16 @@
+<div class="row">
+    <div class="col-md-6 offset-md-3">
+        <h1>Login</h1>
+        <div class="form-group">
+            <form method="POST">
+                <?php $this->form->render(); ?>
+                <?php if (!empty($this->error)) { ?>
+                    <div class="alert alert-danger" style="margin-top: 15px;">
+                        <?= $this->error ?>
+                    </div>
+                <?php } ?>
+                <input type="submit" name="Login" class="btn btn-success btn-block">
+            </form>
+        </div>
+    </div>
+</div>

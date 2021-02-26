@@ -23,6 +23,7 @@ class Bootstrap
         $this->_notFoundController = $this->_config['appDefaults']['notFoundController'];
         $this->_controllersDir = $this->_config['app']['controllersDir'];
         $this->_modelsDir = $this->_config['app']['modelsDir'];
+        $this->_formsDir = $this->_config['app']['formsDir'];
         $this->_systemDir = $this->_config['app']['systemDir'];
         $this->_defaultControllerAction = $this->_config['appDefaults']['defaultAction'] . $this->_config['appDefaults']['actionSuffix'];
 
@@ -33,6 +34,10 @@ class Bootstrap
 
             if (file_exists($this->_modelsDir . $className . '.php')) {
                 require_once $this->_modelsDir . $className . '.php';
+            }
+
+            if (file_exists($this->_formsDir . $className . '.php')) {
+                require_once $this->_formsDir . $className . '.php';
             }
 
             if (file_exists( $this->_systemDir . $className  . '.php')) {

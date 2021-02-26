@@ -1,0 +1,13 @@
+<label for="<?= $input['id'] ?>"><?= $input['label'] ?>
+    <?php if (!empty($input['required'])) {
+    ?>
+        <span class="text-danger">*</span>
+    <?php
+    } ?> </label>
+<input type="<?= $input['type'] ?>" id="<?= $input['id'] ?>" name="<?= $inputName ?>" class="form-control" value="<?= $input['value'] ?? '' ?>">
+
+
+<?php
+if (!empty($input['errors'])) { ?>
+    <p class="text-danger"><?= implode($input['errors'], ' ') ?></p>
+<?php } ?>
