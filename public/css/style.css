@@ -4,9 +4,9 @@
   font-size: 16px;
 }
 
-.btn {
+/* .btn {
   margin-top: 15px;
-}
+} */
 
 .view-wrapper {
   margin-bottom: 50px;
@@ -88,13 +88,17 @@ nav {
   }
 }
 
-/* mobile view */
-@media (max-width: 500px) {
+/* phone */
+@media (max-width: 376px) {
   .navbar-nav {
     border-top: 3px solid #fed136;
     color: #fff;
     z-index: 1;
     margin-top: 5px;
+  }
+
+  #header-height-fix {
+    height: 60px;
   }
 
   .navbar-brand {

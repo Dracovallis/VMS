@@ -46,7 +46,7 @@ class Form
                     if (is_array($value)) {
                         $this->$key($input, ...$value);
                     } else {
-                        $this-> $value($input);
+                        $this->$value($input);
                     }
                 }
             }

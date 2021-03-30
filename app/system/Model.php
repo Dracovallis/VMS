@@ -27,6 +27,16 @@ class Model
         if (!empty($args['offset'])) {
             $query .= ' OFFSET ' . (int)$args['offset'];
         }
+        if (!empty($args['order'])) {
+            $query .= ' ORDER BY ';
+
+            $orderClauseArr = [];
+            foreach ($args['order'] as $field => $order) {
+                $orderClauseArr[] = " $field $order";
+            }
+
+            $query .=  implode(', ', $orderClauseArr);
+        }
 
         $stmt = $this->_db->prepare($query);
 
@@ -52,13 +62,34 @@ class Model
             }
 
             $entities = $mappedEntities;
-         
         }
 
         return $entities;
     }
 
-    public function findFirst($id) {
+    public function delete($args = [])
+    {
+        $query = "DELETE FROM " . $this->_tableName;
+
+        if (!empty($args['conditions'])) {
+            $query .= ' WHERE ' . $args['conditions'];
+        }
+
+        $stmt = $this->_db->prepare($query);
+
+        if (isset($args['bind'])) {
+            preg_match_all("/\:(?'parsedMatches'[A-z0-9]{1,})/i", $args['conditions'], $matches);
+
+            foreach ($matches['parsedMatches'] as $key) {
+                $stmt->bindParam(':' . $key, $args['bind'][$key]);
+            }
+        }
+
+        return $stmt->execute();
+    }
+
+    public function findFirst($id)
+    {
         $query = "SELECT * FROM " . $this->_tableName . " WHERE " . $this->_primary_key . " = :id";
         $stmt = $this->_db->prepare($query);
         $stmt->bindParam(':id', $id);

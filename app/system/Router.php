@@ -11,7 +11,7 @@ class Router
     { 
         $this->_whitelistUrls[] = $this->get(['controller' => 'auth', 'action' => 'login']);
         $this->_whitelistUrls[] = $this->get(['controller' => 'auth', 'action' => 'register']);
-        $this->_whitelistUrls[] = $this->get(['controller' => 'home']);
+        $this->_whitelistUrls[] = $this->get(['controller' => 'auth', 'action' => 'logout']);
 
         $this->_currentUrl = "$_SERVER[REQUEST_URI]";
     }

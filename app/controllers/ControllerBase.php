@@ -11,12 +11,6 @@ class ControllerBase
     protected $_userMenu = [
         'guest' => [
             [
-                'title' => 'Home',
-                'url' => [
-                    'controller' => 'home'
-                ]
-            ],
-            [
                 'title' => 'Login',
                 'url' => [
                     'controller' => 'auth',
@@ -42,10 +36,10 @@ class ControllerBase
                 'title' => 'User',
                 'children' => [
                     [
-                        'title' => 'Profile',
+                        'title' => 'Diary',
                         'url' => [
                             'controller' => 'user',
-                            'action' => 'profile'
+                            'action' => 'diary'
                         ]
                     ],
                     [
@@ -54,7 +48,16 @@ class ControllerBase
                             'controller' => 'user',
                             'action' => 'dashboard'
                         ]
-                    ]
+                    ],
+
+                    [
+                        'title' => 'Profile',
+                        'url' => [
+                            'controller' => 'user',
+                            'action' => 'profile'
+                        ]
+                    ],
+
                 ]
 
             ],
@@ -72,16 +75,18 @@ class ControllerBase
     {
         $this->_config = $config;
 
-        include('../app/system/Model.php');
-        include('../app/system/Form.php');
-        include('system/Router.php');
+        require_once('../app/system/Model.php');
+        require_once('../app/system/Form.php');
+        require_once('system/Router.php');
+        require_once('system/Db.php');
+
         $this->_router = new app\system\Router();
 
-
-        session_start();
+        if (!isset($_SESSION)) {
+            session_start();
+        }
         $this->authenticate();
 
-        include('system/Db.php');
         $this->_db = app\system\Db::getInstance(
             $this->_config['database']['host'],
             $this->_config['database']['dbname'],

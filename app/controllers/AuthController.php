@@ -22,7 +22,7 @@ class AuthController extends ControllerBase
 
                 if (!empty($user) && !empty($user[0])) {
                     $this->setToken($user[0]['username'], $user[0]['id']);
-                    $this->_router->goTo(['controller' => 'home']);
+                    $this->_router->goTo(['controller' => 'user', 'action' =>  'diary']);
                 } else {
                     $this->setVars([
                         'error' => 'Invalid username or password.'
@@ -57,7 +57,7 @@ class AuthController extends ControllerBase
 
                 $this->setToken($data['username'], $userId);
 
-                $this->_router->goTo(['controller' => 'home']);
+                $this->_router->goTo(['controller' => 'user', 'action' =>  'diary']);
             }
         }
 

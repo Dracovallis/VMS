@@ -1,0 +1,103 @@
+<h1>Diary</h1>
+
+
+<h5>
+    Cigarettes
+</h5>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Total</th>
+            <th>Last smoke</th>
+            <th>Not smoked since</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><?= $this->smokingList ? count($this->smokingList) : 0 ?></td>
+            <td><?= $this->smokingList ? $this->smokingList[0]['create_time'] : 'N/A' ?></td>
+            <td>
+                <div id="no-smoked-since-js" data-last-smoke="<?= $this->smokingList ? $this->smokingList[0]['create_time'] : date('Y-m-d 0:0:0') ?>"></div>
+            </td>
+            <td>
+                <form method="POST">
+                    <input type="submit" name="submit" class="btn btn-success" value="+ 1">
+                </form>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<?php if (count($this->smokingList) > 0) {
+    $counter = count($this->smokingList);
+?>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    #
+                </th>
+                <th>
+                    Hour
+                </th>
+                <th>
+
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+            foreach ($this->smokingList as $item) { ?>
+                <tr>
+                    <td><?= $counter ?></td>
+                    <td><?= $item['create_time'] ?></td>
+                    <td>
+                        <form method="POST" action="<?= $this->_router->get(['controller' => 'smoking', 'action' => 'delete', 'getParams' => ['id' => $item['id']]]) ?>">
+                            <input type="submit" name="submit" class="btn btn-danger" value="Delete">
+                        </form>
+                    </td>
+                </tr>
+            <?php $counter--;
+            } ?>
+        </tbody>
+    </table>
+<?php } ?>
+
+
+<script>
+    var counter = $('#no-smoked-since-js');
+    var lastSmokeTime = new Date(counter.data('last-smoke'));
+    var now = new Date();
+
+    var diff = new Date(Math.abs(now - lastSmokeTime));
+    diff.setHours(diff.getHours() - 2);
+
+
+    var seconds = diff.getSeconds();
+    var minutes = diff.getMinutes();
+    var hours = diff.getHours();
+    var t;
+
+    function add() {
+        seconds++;
+        if (seconds >= 60) {
+            seconds = 0;
+            minutes++;
+            if (minutes >= 60) {
+                minutes = 0;
+                hours++;
+            }
+        }
+
+        counter.text((hours ? (hours > 9 ? hours : "0" + hours) : "00") + ":" + (minutes ? (minutes > 9 ? minutes : "0" + minutes) : "00") + ":" + (seconds > 9 ? seconds : "0" + seconds));
+
+        timer();
+
+    }
+
+    function timer() {
+        t = setTimeout(add, 1000);
+    }
+    timer();
+</script>

@@ -16,6 +16,8 @@ class Bootstrap
 
     public function __construct($config)
     {
+        date_default_timezone_set('Europe/Sofia');
+
         $this->_config = $config;
         $this->_actionSuffix = $this->_config['appDefaults']['actionSuffix'];
         $this->_controllerSuffix = $this->_config['appDefaults']['controllerSuffix'];
